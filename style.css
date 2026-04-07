@@ -1,0 +1,497 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* Prevents padding from adding extra width */
+}
+
+/* 4. SCENE CONTAINERS (Applies to .it-container, .security-overlay, etc.) */
+#matrix-container,
+.it-container, 
+.security-overlay, 
+.captcha-container, 
+.monitor-container, 
+.final-stage {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute; /* Stack them perfectly over the stage */
+    top: 0;
+    left: 0;
+}
+
+/* --- SCENE 1: THE CLEAN START --- */
+.it-container {
+    position: fixed;    /* Use fixed to 'lock' it to the screen */
+    top: 0;
+    left: 0;
+    width: 100vw;       /* 100% of the Viewport Width */
+    height: 100vh;      /* 100% of the Viewport Height */
+    background: #ffffff; 
+    display: flex;
+    flex-direction: column; 
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; 
+    z-index: 9999;      /* Ensure it stays on top of any other layers */
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background: #fff; /* Match your container color */
+}
+
+.grid-overlay {
+    position: absolute;
+    top: -50%; /* Center the 200% grid */
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.logo-wrapper {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    /* ADDED FOR 3D: Creates a "camera depth" so things can fly forward */
+    perspective: 1000px; 
+    transform-style: preserve-3d;
+}
+
+.glow-logo {
+    width: 800px;
+    max-width: 95vw;
+    height: auto;
+    animation: float 4s ease-in-out infinite;
+}
+
+.status-text {
+    margin-top: 40px;
+    color: #333; /* Darker grey for white background */
+    font-family: 'Courier New', monospace;
+    font-size: 1.2rem;
+    font-weight: bold;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+}
+
+.glass-shard {
+    position: absolute;
+    z-index: 999;
+    /* Slightly faster explosive transition curve */
+    transition: transform 1.2s cubic-bezier(0.15, 1, 0.3, 1), opacity 1.2s cubic-bezier(0.8, 0, 1, 1);
+    pointer-events: none;
+    will-change: transform, opacity;
+    /* Added a dark shadow so when they fly forward, they cast a shadow behind them */
+    filter: drop-shadow(0px 15px 15px rgba(0, 0, 0, 0.4)) contrast(1.2);
+    /* Ensures you can see both sides of the piece if it spins around completely */
+    backface-visibility: visible; 
+}
+
+#matrixCanvas {
+    filter: blur(0.5px) contrast(1.2);
+}
+
+/*SCENE 4*/
+.security-overlay {
+    position: absolute !important; 
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.85);
+    display: flex;
+    justify-content: center; 
+    align-items: center;     
+    margin: 0;
+    padding: 0;
+    z-index: 100; 
+    overflow: hidden;
+}
+
+.security-card {
+    background: #ffffff;
+    border: 1px solid #767676;
+    padding: 50px 50px; /* Increased top/bottom padding for a taller card */
+    border-radius: 12px;
+    text-align: center;
+    width: 85vw; 
+    max-width: 700px; 
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    animation: fadeIn 0.5s ease-out;
+}
+
+.shield-icon {
+    margin-bottom: 20px;
+    filter: drop-shadow(0 0 10px rgba(0, 85, 255, 0.5));
+}
+
+.security-card h2 {
+    color: #000000;
+    font-size: 3rem; 
+    margin-bottom: 10px;
+    letter-spacing: 2px;
+}
+
+.security-card p {
+    color: #000000;
+    font-size: 1.8rem; 
+    line-height: 1.2;
+    margin-bottom: 60px; 
+}
+
+.next-btn {
+    background: #0055ff;
+    border: 1px solid #0055ff;
+    color: #ffffff;
+    padding: 20px 60px; /* Fatter, wider button */
+    font-size: 1.5rem; /* Bigger button text */
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-transform: uppercase;
+}
+
+/*SCENE 5 - CAPTCHA*/
+.captcha-container {
+    position: fixed; /* Locks it to the screen */
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.85); 
+    z-index: 9999; 
+}
+
+.captcha-box {
+    background-color: #ffffff; 
+    padding: 25px;
+    width: 750px;
+    transform: scale(1.1); 
+    transform-origin: center center;
+    box-shadow: 0px 15px 40px rgba(0, 0, 0, 0.6);
+    border-radius: 10px; 
+}
+
+.captcha-header { 
+    display: flex; 
+    justify-content: space-between; 
+    margin-bottom: 20px; 
+    font-size: 18px; 
+}
+
+.captcha-img-area {
+    position: relative; 
+    width: 700px;  
+    height: 500px; 
+    background: #eee; 
+    overflow: hidden; 
+    border-radius: 4px;
+    margin: 0 auto; 
+}
+
+.main-img { 
+    width: 100%; 
+    height: 100%; 
+    display: block;
+}
+
+/* 1. THE GAP (HOLE) CONTAINER*/
+.puzzle-gap {
+    position: absolute; 
+    width: 160px; 
+    height: 160px; 
+    top: 60px; 
+    left: 70%; 
+    
+    background: transparent !important; 
+    z-index: 5;
+    filter: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='inset'%3E%3CfeGaussianBlur in='SourceAlpha' stdDeviation='6' result='blur'/%3E%3CfeFlood flood-color='black' flood-opacity='0.8'/%3E%3CfeComposite in2='blur' operator='out'/%3E%3CfeComposite in2='SourceAlpha' operator='in'/%3E%3CfeMerge%3E%3CfeMergeNode in='SourceGraphic'/%3E%3CfeMergeNode/%3E%3C/feMerge%3E%3C/filter%3E%3C/svg%3E#inset");
+}
+
+.puzzle-gap::before {
+    content: "";
+    position: absolute;
+    top: 0; 
+    left: 0;
+    width: 100%; 
+    height: 100%;
+    
+    background-color: #ffffff; 
+    
+    clip-path: path('M40,40 h24 c0,-32 32,-32 32,0 h24 v24 c32,0 32,32 0,32 v24 h-24 c0,-32 -32,-32 -32,0 h-24 v-24 c32,0 32,-32 0,-32 Z');
+    filter: none; 
+}
+
+/* 3. THE FLOATING PIECE */
+.puzzle-piece {
+    position: absolute; 
+    width: 160px; 
+    height: 160px; 
+    top: 60px; 
+    left: 0%;
+    
+    background-image: url('assets/jpkn-distortion.png'); 
+    background-size: 700px 500px; 
+    background-position: -490px -60px; 
+    z-index: 10;
+    clip-path: path('M40,40 h24 c0,-32 32,-32 32,0 h24 v24 c32,0 32,32 0,32 v24 h-24 c0,-32 -32,-32 -32,0 h-24 v-24 c32,0 32,-32 0,-32 Z');
+    filter: drop-shadow(0px 0px 15px rgba(0, 0, 0, 0.6));
+}
+
+/* The track the slider moves on */
+.slider-container { 
+    position: relative; 
+    margin: 20px auto 0; 
+    width: 700px; 
+    height: 80px; 
+    background: #e6f0fa; 
+    border: 1px solid #c4d7ec; 
+    border-radius: 4px; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.slider-text {
+    position: absolute;
+    color: #555;
+    font-size: 20px;
+    pointer-events: none; 
+}
+
+#captchaSlider {
+    position: absolute; 
+    width: 100%; 
+    height: 100%;
+    -webkit-appearance: none; 
+    appearance: none; 
+    background: transparent; 
+    cursor: pointer; 
+    z-index: 2;
+    margin: 0;
+}
+
+/* The moving blue thumb block */
+#captchaSlider::-webkit-slider-thumb {
+    -webkit-appearance: none; 
+    appearance: none; 
+    width: 80px; 
+    height: 80px; 
+    background: #2196F3;
+    border-radius: 4px; 
+    cursor: grab;
+    box-shadow: 0 0 5px rgba(0,0,0,0.3); 
+    
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="32" viewBox="0 -960 960 960" width="32" fill="white"><path d="M647-440H160v-80h487L423-744l57-56 320 320-320 320-57-56 224-224Z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+/* For Firefox compatibility */
+#captchaSlider::-moz-range-thumb {
+    width: 60px; 
+    height: 60px; 
+    background: #2196F3; 
+    border: none;
+    border-radius: 4px; 
+    cursor: grab;
+    box-shadow: 0 0 5px rgba(0,0,0,0.3);
+    
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="32" viewBox="0 -960 960 960" width="32" fill="white"><path d="M647-440H160v-80h487L423-744l57-56 320 320-320 320-57-56 224-224Z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+/*SCENE 6*/
+.monitor-container {
+    width: 100vw;
+    height: 100vh; 
+    background: #000; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; 
+    margin: 0;
+}
+
+.content-frame {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.gimmick-pic {
+    max-width: 100vw; 
+    max-height: 100vh; 
+    width: 100%;
+    height: 100%;
+    object-fit: contain; 
+    display: block;
+}
+
+.timer-display {
+    display: none; 
+}
+
+/*SCENE 7*/
+.final-stage {
+    width: 100%;
+    height: 100vh;
+    background: #ffffff; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.white-out {
+    position: absolute;
+    inset: 0;
+    background: #ffffff;
+    z-index: 100;
+    animation: flashFade 1.5s ease-out forwards;
+}
+
+.logo-container {
+    position: relative;
+    text-align: center;
+    z-index: 10;
+}
+
+.hero-logo {
+    width: 1000px;
+    opacity: 0;
+    transform: scale(0.8) translateY(20px);
+    filter: drop-shadow(0 0 0px rgba(255,255,255,0));
+    transition: all 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.hero-logo.active {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    filter: drop-shadow(0 0 20px rgba(255,255,255,0.3));
+}
+
+.brand-name {
+    margin-top: 30px;
+    color: #fff;
+    font-family: sans-serif;
+    letter-spacing: 8px;
+    font-size: 1.2rem;
+    opacity: 0;
+    transition: all 1s ease-out 0.8s; /* Appears after logo */
+}
+
+.brand-name.active {
+    opacity: 0.7;
+}
+
+/* Background Atmosphere */
+.ambient-glow {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    background: radial-gradient(circle, rgba(0, 85, 255, 0.1) 0%, rgba(0,0,0,0) 70%);
+    animation: pulseGlow 4s infinite alternate;
+}
+
+/* Animations */
+@keyframes flashFade {
+    0% { opacity: 1; }
+    100% { opacity: 0; visibility: hidden; }
+}
+
+@keyframes pulseGlow {
+    from { opacity: 0.3; transform: scale(1); }
+    to { opacity: 0.6; transform: scale(1.1); }
+}
+
+@keyframes burst {
+    0% { transform: scale(0); opacity: 1; }
+    50% { transform: scale(500); opacity: 0.5; }
+    100% { transform: scale(1000); opacity: 0; }
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.2; }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+@keyframes white-flash {
+    0% { background: #fff; }
+    100% { background: #050505; }
+}
+
+@keyframes sharp-shatter {
+    0% {
+        transform: scale(1);
+        filter: brightness(1) contrast(1);
+        clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+    }
+    /* The moment of impact - the cracking starts */
+    15% {
+        transform: scale(1.05) rotate(1deg);
+        filter: brightness(1.5) contrast(1.2);
+        clip-path: polygon(0% 0%, 50% 10%, 100% 0%, 90% 50%, 100% 100%, 50% 90%, 0% 100%, 10% 50%);
+    }
+    /* Shards flying outwards like your reference image */
+    100% {
+        transform: scale(1.5) rotate(-5deg);
+        filter: brightness(0) blur(2px); /* Turns black/silhouette like the image */
+        opacity: 0;
+        /* Sharp jagged shard shapes */
+        clip-path: polygon(
+            20% 10%, 10% 20%, 5% 5%, 30% 0%, 50% 15%, 
+            70% 0%, 90% 10%, 100% 30%, 85% 50%, 100% 70%, 
+            90% 90%, 70% 100%, 50% 85%, 30% 100%, 10% 90%, 0% 70%, 15% 50%, 0% 30%
+        );
+    }
+}
+
+@keyframes heavy-shake {
+    0% { transform: translate(0,0); }
+    10% { transform: translate(-10px, 5px); }
+    30% { transform: translate(10px, -5px); }
+    50% { transform: translate(-5px, 10px); }
+    70% { transform: translate(5px, -10px); }
+    100% { transform: translate(0,0); }
+}
+
+/* Animations */
+@keyframes moveGrid {
+    0% { transform: translate(-25%, -25%); }
+    100% { transform: translate(0, 0); }
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+}
+
+#oldLogo {
+    /* Fast hide for the shatter effect */
+    transition: opacity 0.01s linear, transform 0.1s ease-out; 
+}
