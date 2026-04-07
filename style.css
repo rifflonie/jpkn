@@ -211,7 +211,7 @@ html, body {
     display: block;
 }
 
-/* 1. THE GAP (HOLE) CONTAINER*/
+/* 1. THE GAP (HOLE) CONTAINER - We apply the inside shadow here! */
 .puzzle-gap {
     position: absolute; 
     width: 160px; 
@@ -221,9 +221,12 @@ html, body {
     
     background: transparent !important; 
     z-index: 5;
-    filter: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='inset'%3E%3CfeGaussianBlur in='SourceAlpha' stdDeviation='6' result='blur'/%3E%3CfeFlood flood-color='black' flood-opacity='0.8'/%3E%3CfeComposite in2='blur' operator='out'/%3E%3CfeComposite in2='SourceAlpha' operator='in'/%3E%3CfeMerge%3E%3CfeMergeNode in='SourceGraphic'/%3E%3CfeMergeNode/%3E%3C/feMerge%3E%3C/filter%3E%3C/svg%3E#inset");
+    
+    /* ADDED TO PARENT: This creates the deep inside shadow (inner glow) */
+    filter: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='inset'%3E%3CfeGaussianBlur in='SourceAlpha' stdDeviation='6' result='blur'/%3E%3CfeFlood flood-color='black' flood-opacity='100.0'/%3E%3CfeComposite in2='blur' operator='out'/%3E%3CfeComposite in2='SourceAlpha' operator='in'/%3E%3CfeMerge%3E%3CfeMergeNode in='SourceGraphic'/%3E%3CfeMergeNode/%3E%3C/feMerge%3E%3C/filter%3E%3C/svg%3E#inset");
 }
 
+/* 2. THE GAP SHAPE - Just the pure white shape being cut out */
 .puzzle-gap::before {
     content: "";
     position: absolute;
@@ -235,6 +238,8 @@ html, body {
     background-color: #ffffff; 
     
     clip-path: path('M40,40 h24 c0,-32 32,-32 32,0 h24 v24 c32,0 32,32 0,32 v24 h-24 c0,-32 -32,-32 -32,0 h-24 v-24 c32,0 32,-32 0,-32 Z');
+    
+    /* REMOVED FILTER FROM HERE so the browser doesn't break it */
     filter: none; 
 }
 
