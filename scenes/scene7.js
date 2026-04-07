@@ -1,6 +1,20 @@
 // scenes/scene7.js
 
 export function loadScene7(stage) {
+    // 1. EXPLICITLY DELETE THE PUZZLE AND SLIDER
+    const puzzleWrapper = document.getElementById('puzzle-wrapper');
+    if (puzzleWrapper) puzzleWrapper.remove(); // Deletes the puzzle piece
+    
+    const sliderContainer = document.getElementById('sliderContainer');
+    if (sliderContainer) sliderContainer.remove(); // Deletes the slider
+    
+    const captchaArea = document.querySelector('.captcha-img-area');
+    if (captchaArea) captchaArea.remove(); // Deletes the old background box
+
+    // 2. Clear anything else left in the stage
+    stage.innerHTML = '';
+
+    // 3. Load your pure JTDI scene
     stage.innerHTML = `
         <div class="final-stage">
             <div class="white-out"></div>
@@ -11,12 +25,17 @@ export function loadScene7(stage) {
             </div>
 
             <div class="ambient-glow"></div>
+            
+            <div class="brand-name"></div>
         </div>
     `;
 
     // Trigger the entrance animations
     setTimeout(() => {
-        document.getElementById('newLogo').classList.add('active');
-        document.querySelector('.brand-name').classList.add('active');
+        const newLogo = document.getElementById('newLogo');
+        const brandName = document.querySelector('.brand-name');
+        
+        if (newLogo) newLogo.classList.add('active');
+        if (brandName) brandName.classList.add('active');
     }, 100);
 }
