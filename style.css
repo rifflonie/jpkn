@@ -89,13 +89,10 @@ html, body {
 .glass-shard {
     position: absolute;
     z-index: 999;
-    /* Slightly faster explosive transition curve */
     transition: transform 1.2s cubic-bezier(0.15, 1, 0.3, 1), opacity 1.2s cubic-bezier(0.8, 0, 1, 1);
     pointer-events: none;
     will-change: transform, opacity;
-    /* Added a dark shadow so when they fly forward, they cast a shadow behind them */
     filter: drop-shadow(0px 15px 15px rgba(0, 0, 0, 0.4)) contrast(1.2);
-    /* Ensures you can see both sides of the piece if it spins around completely */
     backface-visibility: visible; 
 }
 
@@ -127,7 +124,9 @@ html, body {
     border-radius: 12px;
     text-align: center;
     width: 85vw; 
-    max-width: 700px; 
+    height: 85vh;
+    max-width: 900px;
+    max-height:600px;
     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
     animation: fadeIn 0.5s ease-out;
 }
@@ -148,7 +147,7 @@ html, body {
     color: #000000;
     font-size: 1.8rem; 
     line-height: 1.2;
-    margin-bottom: 60px; 
+    margin-bottom: 100px; 
 }
 
 .next-btn {
@@ -182,7 +181,7 @@ html, body {
     background-color: #ffffff; 
     padding: 25px;
     width: 750px;
-    transform: scale(1.1); 
+    transform: scale(1.0); 
     transform-origin: center center;
     box-shadow: 0px 15px 40px rgba(0, 0, 0, 0.6);
     border-radius: 10px; 
@@ -214,19 +213,17 @@ html, body {
 /* 1. THE GAP (HOLE) CONTAINER - We apply the inside shadow here! */
 .puzzle-gap {
     position: absolute; 
-    width: 160px; 
-    height: 160px; 
-    top: 60px; 
-    left: 70%; 
+    width: 240px;  
+    height: 240px; 
+    top: 150px; 
+    left: 45%; 
     
     background: transparent !important; 
     z-index: 5;
     
-    /* ADDED TO PARENT: This creates the deep inside shadow (inner glow) */
-    filter: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='inset'%3E%3CfeGaussianBlur in='SourceAlpha' stdDeviation='6' result='blur'/%3E%3CfeFlood flood-color='black' flood-opacity='100.0'/%3E%3CfeComposite in2='blur' operator='out'/%3E%3CfeComposite in2='SourceAlpha' operator='in'/%3E%3CfeMerge%3E%3CfeMergeNode in='SourceGraphic'/%3E%3CfeMergeNode/%3E%3C/feMerge%3E%3C/filter%3E%3C/svg%3E#inset");
+    filter: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='inset'%3E%3CfeGaussianBlur in='SourceAlpha' stdDeviation='6' result='blur'/%3E%3CfeFlood flood-color='black' flood-opacity='80.0'/%3E%3CfeComposite in2='blur' operator='out'/%3E%3CfeComposite in2='SourceAlpha' operator='in'/%3E%3CfeMerge%3E%3CfeMergeNode in='SourceGraphic'/%3E%3CfeMergeNode/%3E%3C/feMerge%3E%3C/filter%3E%3C/svg%3E#inset");
 }
 
-/* 2. THE GAP SHAPE - Just the pure white shape being cut out */
 .puzzle-gap::before {
     content: "";
     position: absolute;
@@ -236,27 +233,34 @@ html, body {
     height: 100%;
     
     background-color: #ffffff; 
-    
-    clip-path: path('M40,40 h24 c0,-32 32,-32 32,0 h24 v24 c32,0 32,32 0,32 v24 h-24 c0,-32 -32,-32 -32,0 h-24 v-24 c32,0 32,-32 0,-32 Z');
-    
-    /* REMOVED FILTER FROM HERE so the browser doesn't break it */
+    clip-path: path('M60,60 h36 c0,-48 48,-48 48,0 h36 v36 c48,0 48,48 0,48 v36 h-36 c0,-48 -48,-48 -48,0 h-36 v-36 c48,0 48,-48 0,-48 Z');    
     filter: none; 
 }
 
-/* 3. THE FLOATING PIECE */
-.puzzle-piece {
+/* 1. The Wrapper holds the shadow and moves left/right */
+.puzzle-wrapper {
     position: absolute; 
-    width: 160px; 
-    height: 160px; 
-    top: 60px; 
-    left: 0%;
+    width: 240px;  
+    height: 240px; 
+    top: 150px; 
+    left: 0;
+    z-index: 10;
+    
+    /* The shadow goes HERE, outside the cookie-cutter! */
+    filter: drop-shadow(0px 15px 15px rgba(0, 0, 0, 0.8));
+}
+
+/* 2. The Inner Piece just handles the image and the cut-out shape */
+.puzzle-piece {
+    width: 100%;
+    height: 100%;
     
     background-image: url('assets/jpkn-distortion.png'); 
     background-size: 700px 500px; 
-    background-position: -490px -60px; 
-    z-index: 10;
-    clip-path: path('M40,40 h24 c0,-32 32,-32 32,0 h24 v24 c32,0 32,32 0,32 v24 h-24 c0,-32 -32,-32 -32,0 h-24 v-24 c32,0 32,-32 0,-32 Z');
-    filter: drop-shadow(0px 0px 15px rgba(0, 0, 0, 0.6));
+    background-position: -315px -150px; 
+    
+    /* The cookie cutter is applied safely inside the wrapper */
+    clip-path: path('M60,60 h36 c0,-48 48,-48 48,0 h36 v36 c48,0 48,48 0,48 v36 h-36 c0,-48 -48,-48 -48,0 h-36 v-36 c48,0 48,-48 0,-48 Z');
 }
 
 /* The track the slider moves on */
@@ -310,8 +314,8 @@ html, body {
 
 /* For Firefox compatibility */
 #captchaSlider::-moz-range-thumb {
-    width: 60px; 
-    height: 60px; 
+    width: 80px; 
+    height: 80px; 
     background: #2196F3; 
     border: none;
     border-radius: 4px; 
