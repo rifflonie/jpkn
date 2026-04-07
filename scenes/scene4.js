@@ -18,7 +18,7 @@ export function loadScene4(stage) {
                 <h2>Wait! Are you human?</h2>
                 <p>Please confirm to make a change.</p>
 
-                <button id="verifyBtn" class="next-btn">NEXT</button>
+                <button id="verifyBtn" class="next-btn">Confirm</button>
             </div>
         </div>
     `;
