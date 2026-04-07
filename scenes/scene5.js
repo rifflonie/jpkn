@@ -24,10 +24,13 @@ export function loadScene5(stage) {
         <div class="captcha-container">
             <div class="captcha-box">
                 <div class="captcha-img-area">
-                    <img src="assets/jpkn-distortion.png" class="main-img" alt="puzzle-bg">
-                    <div class="puzzle-gap"></div>
-                    <div id="puzzle-piece" class="puzzle-piece"></div>
-                </div>
+    <img src="assets/jpkn-distortion.png" class="main-img" alt="puzzle-bg">
+    <div class="puzzle-gap"></div>
+    
+    <div id="puzzle-wrapper" class="puzzle-wrapper">
+        <div class="puzzle-piece"></div>
+    </div>
+</div>
 
                 <div class="slider-container" id="sliderContainer">
                     <span class="slider-text">Slide to complete the puzzle</span>
@@ -35,49 +38,49 @@ export function loadScene5(stage) {
                 </div>
 
                 <div id="sliderThumb" class="slider-thumb">
-                    <span class="material-symbols-outlined"</span>
+                    <span class="material-symbols-outlined"></span>
                 </div>
             </div>
         </div>
     `;
 
     const slider = document.getElementById('captchaSlider');
-    const piece = document.getElementById('puzzle-piece');
+    const piece = document.getElementById('puzzle-wrapper');
     const sliderContainer = document.getElementById('sliderContainer');
-    const targetPos = 70; 
+    
+    // The thumb must hit ~63.7 to reach the 45% hole perfectly
+    const targetPos = 63.7; 
     const tolerance = 3;  
 
     slider.oninput = function() {
-        const val = this.value;
-        const movePercentage = val * 0.8; 
-        piece.style.left = movePercentage + "%";
+        const val = this.value; 
+        
+        // 1. Calculate the EXACT pixel position of the thumb (Track is 620px wide)
+        const thumbPx = (val / 100) * 620; 
+        
+        // 2. Move the piece with the exact offset to keep it centered
+        piece.style.left = (thumbPx - 80) + "px"; 
     };
 
     slider.onchange = function() {
-        const val = parseInt(this.value);
-        const movePercentage = val * 0.8; 
+        const val = parseFloat(this.value);
         
-        if (Math.abs(movePercentage - targetPos) <= tolerance) {
-            // 1. Snap piece to the perfect spot
-            piece.style.left = targetPos + "%";
+        if (Math.abs(val - targetPos) <= tolerance) {
+            // SUCCESS
+            slider.value = targetPos; 
             
-            // 3. TURN SLIDER GREEN 
+            // Snap piece perfectly into the 45% hole (315px)
+            piece.style.left = "315px"; 
+            
+            // TURN SLIDER GREEN 
             slider.classList.add('success-slider');
             sliderContainer.classList.add('success-bg');
-            
             slider.disabled = true;
             
             setTimeout(() => {
                 changeScene(loadScene6);
             }, 1000); 
-            
-        } else {
-            // Reset on fail
-            this.value = 0;
-            piece.style.left = "0%";
-            piece.style.setProperty('filter', 'drop-shadow(0px 0px 4px rgba(255, 255, 255, 1)) drop-shadow(0px 0px 6px rgba(0, 0, 0, 0.8))', 'important');
-            slider.classList.remove('success-slider');
-            sliderContainer.classList.remove('success-bg');
-        }
+        
     };
+}
 }
