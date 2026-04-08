@@ -8,15 +8,15 @@ export function loadScene4(stage) {
         </div>
 
         <div class="security-overlay" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 105; display: flex; justify-content: center; align-items: center; background: rgba(0, 0, 0, 0.6);">
-            <div class="security-card">
-                <div class="shield-icon">
-                    <svg width="150" height="150" viewBox="0 0 24 24" fill="none" stroke="#0055ff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-                    </svg>
+            
+            <div class="security-card" style="padding-top: 0px; padding-bottom: 30px; padding-left: 20px; padding-right: 20px; display: flex; flex-direction: column; align-items: center; text-align: center;">
+                
+                <div class="shield-icon" style="margin-top: -100px; margin-bottom: -120px;">
+                    <img src="assets/yb.png" alt="YB" style="width: 500px; height: 500px; object-fit: contain;">
                 </div>
                 
-                <h2>Wait! Are you human?</h2>
-                <p>Please confirm to make a change.</p>
+                <h2 style="margin-top: 0; margin-bottom: 5px; line-height: 1.2; position: relative; z-index: 10;">Wait! Are you<br>YB Datuk James Ratib?</h2>
+                <p style="margin-top: 5px; margin-bottom: 35px;">Please confirm to make a change.</p>
 
                 <button id="verifyBtn" class="next-btn">Confirm</button>
             </div>
