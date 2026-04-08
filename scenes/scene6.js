@@ -79,21 +79,14 @@ export function loadScene6(stage) {
         </div>
     `;
 
-    let timeLeft = 30; 
-    const countdownEl = document.getElementById('countdown');
+   // 1. Grab the video element
+    const video = document.getElementById('gimmickVideo');
 
-    const timer = setInterval(() => {
-        timeLeft--;
-        
-        if (countdownEl) {
-            countdownEl.innerText = timeLeft;
-        }
-        
-        if (timeLeft <= 0) {
-            clearInterval(timer);
-            executeTransition();
-        }
-    }, 500);
+    // 2. Wait for the video to naturally finish playing
+    video.onended = () => {
+        // As soon as the video is over, run the transition!
+        executeTransition();
+    };
 
     function executeTransition() {
         const container = document.getElementById('monitorContainer');
