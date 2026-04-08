@@ -232,7 +232,7 @@ html, body {
     width: 100%; 
     height: 100%;
     
-    background-color: #8c8b8b; 
+    background-color: #505050; 
     clip-path: path('M60,60 h36 c0,-48 48,-48 48,0 h36 v36 c48,0 48,48 0,48 v36 h-36 c0,-48 -48,-48 -48,0 h-36 v-36 c48,0 48,-48 0,-48 Z');    
     filter: none; 
 }
