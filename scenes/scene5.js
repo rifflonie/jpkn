@@ -77,32 +77,40 @@ export function loadScene5(stage) {
             setTimeout(() => {
                 changeScene(loadScene6);
             }, 1000); 
-        } // FIXED: Added missing closing brace for the 'if' statement
+        } 
     };
 
-    // ==========================================
-    // RESPONSIVE SCALING (The Video Game Trick)
+   // ==========================================
+    // UPGRADED RESPONSIVE SCALING (Fits Landscape too!)
     // ==========================================
     function scaleToFit() {
-        // Grab the puzzle container
+        // FIXED: Now targets the puzzle container instead of the security card
         const container = document.querySelector('.captcha-container'); 
         if (!container) return;
 
-        // Since your track is 620px, let's assume the box is roughly 700px wide
+        // 1. Get the screen's actual width and height
         const screenWidth = window.innerWidth;
-        const scaleFactor = screenWidth / 700; 
+        const screenHeight = window.innerHeight;
 
-        // Only shrink on smaller screens, never stretch it larger than normal
+        // 2. Estimate the size of your box + a little breathing room (margin)
+        const expectedWidth = 700; // Adjust this if your puzzle box is wider
+        const expectedHeight = 750; // Adjust this if your puzzle box is taller
+
+        // 3. See how much we need to shrink to fit the width, AND to fit the height
+        const scaleX = screenWidth / expectedWidth;
+        const scaleY = screenHeight / expectedHeight;
+
+        // 4. THE MAGIC: Pick the smallest scale factor. 
+        // If height is super short (landscape), it will use scaleY to shrink it enough!
+        const scaleFactor = Math.min(scaleX, scaleY);
+
+        // 5. Apply the zoom (never zoom past 100%)
         const finalScale = Math.min(scaleFactor, 1);
 
-        // Apply the zoom
         container.style.transform = `scale(${finalScale})`;
-        container.style.transformOrigin = 'center top'; 
+        container.style.transformOrigin = 'center center'; 
     }
 
-    // Run it instantly
     scaleToFit();
-
-    // Run it again if they rotate their phone or resize the window
     window.addEventListener('resize', scaleToFit);
 }
