@@ -93,7 +93,7 @@ export function loadScene6(stage) {
             clearInterval(timer);
             executeTransition();
         }
-    }, 300);
+    }, 500);
 
     function executeTransition() {
         const container = document.getElementById('monitorContainer');
