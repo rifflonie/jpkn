@@ -126,7 +126,7 @@ html, body {
     width: 85vw; 
     height: 85vh;
     max-width: 800px;
-    max-height:600px;
+    max-height:700px;
     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
     animation: fadeIn 0.5s ease-out;
 }
