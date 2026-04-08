@@ -78,31 +78,37 @@ export function loadScene4(stage) {
         changeScene(loadScene5);
     };
 
-    // ==========================================
-    // RESPONSIVE SCALING (The Video Game Trick)
+   // ==========================================
+    // UPGRADED RESPONSIVE SCALING (Fits Landscape too!)
     // ==========================================
     function scaleToFit() {
-        // 1. Grab the security card container
+        // Change '.security-card' to '.captcha-container' when putting this in scene5.js!
         const container = document.querySelector('.security-card'); 
         if (!container) return;
 
-        // 2. See how wide the user's screen is. Divide by 700 to leave a small border around your 650px card.
+        // 1. Get the screen's actual width and height
         const screenWidth = window.innerWidth;
-        const scaleFactor = screenWidth / 700; 
+        const screenHeight = window.innerHeight;
 
-        // 3. Only shrink on small screens. Math.min prevents it from zooming past 100%.
+        // 2. Estimate the size of your box + a little breathing room (margin)
+        const expectedWidth = 700; // 650px box + 50px buffer
+        const expectedHeight = 750; // Roughly the height of your elements
+
+        // 3. See how much we need to shrink to fit the width, AND to fit the height
+        const scaleX = screenWidth / expectedWidth;
+        const scaleY = screenHeight / expectedHeight;
+
+        // 4. THE MAGIC: Pick the smallest scale factor. 
+        // If height is super short (landscape), it will use scaleY to shrink it enough!
+        const scaleFactor = Math.min(scaleX, scaleY);
+
+        // 5. Apply the zoom (never zoom past 100%)
         const finalScale = Math.min(scaleFactor, 1);
 
-        // 4. Apply the zoom!
         container.style.transform = `scale(${finalScale})`;
-        
-        // 5. Keep it anchored in the center while it scales
         container.style.transformOrigin = 'center center'; 
     }
 
-    // Run immediately when the scene loads
     scaleToFit();
-
-    // Re-calculate if the user resizes their browser window or rotates their phone
     window.addEventListener('resize', scaleToFit);
 }
