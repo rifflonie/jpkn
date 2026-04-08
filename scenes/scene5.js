@@ -5,6 +5,20 @@ import { loadScene6 } from './scene6.js';
 export function loadScene5(stage) {
     stage.innerHTML = `
         <style>
+            /* --- NEW: PERFECT BLACK BACKGROUND WRAPPER --- */
+            .black-bg-wrapper {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100vw;
+                height: 100vh;
+                background-color: #000000; /* Pure Black */
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                overflow: hidden;
+            }
+
             /* Makes the draggable thumb turn bright green with a glow */
             #captchaSlider.success-slider::-webkit-slider-thumb {
                 background-color: #14b314 !important;
@@ -21,23 +35,25 @@ export function loadScene5(stage) {
             }
         </style>
 
-        <div class="captcha-container">
-            <div class="captcha-box">
-                <div class="captcha-img-area">
-                    <img src="assets/jpkn-distortion.png" class="main-img" alt="puzzle-bg">
-                <div class="puzzle-gap"></div>
-                     <div id="puzzle-wrapper" class="puzzle-wrapper">
-                <div class="puzzle-piece"></div>
-            </div>
-        </div>
+        <div class="black-bg-wrapper">
+            <div class="captcha-container">
+                <div class="captcha-box">
+                    <div class="captcha-img-area">
+                        <img src="assets/jpkn-distortion.png" class="main-img" alt="puzzle-bg">
+                        <div class="puzzle-gap"></div>
+                        <div id="puzzle-wrapper" class="puzzle-wrapper">
+                            <div class="puzzle-piece"></div>
+                        </div>
+                    </div>
 
-                <div class="slider-container" id="sliderContainer">
-                    <span class="slider-text">Slide to complete the puzzle</span>
-                    <input type="range" id="captchaSlider" min="0" max="100" value="0">
-                </div>
+                    <div class="slider-container" id="sliderContainer">
+                        <span class="slider-text">Slide to complete the puzzle</span>
+                        <input type="range" id="captchaSlider" min="0" max="100" value="0">
+                    </div>
 
-                <div id="sliderThumb" class="slider-thumb">
-                    <span class="material-symbols-outlined"></span>
+                    <div id="sliderThumb" class="slider-thumb">
+                        <span class="material-symbols-outlined"></span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -84,7 +100,6 @@ export function loadScene5(stage) {
     // UPGRADED RESPONSIVE SCALING (Fits Landscape too!)
     // ==========================================
     function scaleToFit() {
-        // FIXED: Now targets the puzzle container instead of the security card
         const container = document.querySelector('.captcha-container'); 
         if (!container) return;
 
@@ -101,7 +116,6 @@ export function loadScene5(stage) {
         const scaleY = screenHeight / expectedHeight;
 
         // 4. THE MAGIC: Pick the smallest scale factor. 
-        // If height is super short (landscape), it will use scaleY to shrink it enough!
         const scaleFactor = Math.min(scaleX, scaleY);
 
         // 5. Apply the zoom (never zoom past 100%)
