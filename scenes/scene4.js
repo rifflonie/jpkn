@@ -12,7 +12,7 @@ export function loadScene4(stage) {
             <div class="security-card" style="padding-top: 0px; padding-bottom: 30px; padding-left: 20px; padding-right: 20px; display: flex; flex-direction: column; align-items: center; text-align: center; width: 650px; flex-shrink: 0;">
                 
                 <div class="shield-icon" style="margin-top: -100px; margin-bottom: -120px;">
-                    <img src="assets/yb.PNG" alt="YB" style="width: 500px; height: 500px; object-fit: contain;">
+                    <img src="assets/yb.PNG" alt="YB" style="width: 450px; height: 450px; object-fit: contain;">
                 </div>
                 
                 <h2 style="margin-top: 0; margin-bottom: 5px; line-height: 1.2; position: relative; z-index: 10;">Wait! Are you<br>YB Datuk James Ratib?</h2>
