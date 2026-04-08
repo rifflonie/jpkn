@@ -24,13 +24,12 @@ export function loadScene5(stage) {
         <div class="captcha-container">
             <div class="captcha-box">
                 <div class="captcha-img-area">
-    <img src="assets/jpkn-distortion.png" class="main-img" alt="puzzle-bg">
-    <div class="puzzle-gap"></div>
-    
-    <div id="puzzle-wrapper" class="puzzle-wrapper">
-        <div class="puzzle-piece"></div>
-    </div>
-</div>
+                    <img src="assets/jpkn-distortion.png" class="main-img" alt="puzzle-bg">
+                <div class="puzzle-gap"></div>
+                     <div id="puzzle-wrapper" class="puzzle-wrapper">
+                <div class="puzzle-piece"></div>
+            </div>
+        </div>
 
                 <div class="slider-container" id="sliderContainer">
                     <span class="slider-text">Slide to complete the puzzle</span>
@@ -47,8 +46,6 @@ export function loadScene5(stage) {
     const slider = document.getElementById('captchaSlider');
     const piece = document.getElementById('puzzle-wrapper');
     const sliderContainer = document.getElementById('sliderContainer');
-    
-    // The thumb must hit ~63.7 to reach the 45% hole perfectly
     const targetPos = 63.7; 
     const tolerance = 3;  
 
@@ -80,7 +77,32 @@ export function loadScene5(stage) {
             setTimeout(() => {
                 changeScene(loadScene6);
             }, 1000); 
-        
+        } // FIXED: Added missing closing brace for the 'if' statement
     };
-}
+
+    // ==========================================
+    // RESPONSIVE SCALING (The Video Game Trick)
+    // ==========================================
+    function scaleToFit() {
+        // Grab the puzzle container
+        const container = document.querySelector('.captcha-container'); 
+        if (!container) return;
+
+        // Since your track is 620px, let's assume the box is roughly 700px wide
+        const screenWidth = window.innerWidth;
+        const scaleFactor = screenWidth / 700; 
+
+        // Only shrink on smaller screens, never stretch it larger than normal
+        const finalScale = Math.min(scaleFactor, 1);
+
+        // Apply the zoom
+        container.style.transform = `scale(${finalScale})`;
+        container.style.transformOrigin = 'center top'; 
+    }
+
+    // Run it instantly
+    scaleToFit();
+
+    // Run it again if they rotate their phone or resize the window
+    window.addEventListener('resize', scaleToFit);
 }
