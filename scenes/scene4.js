@@ -9,7 +9,7 @@ export function loadScene4(stage) {
 
         <div class="security-overlay" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 105; display: flex; justify-content: center; align-items: center; background: rgba(0, 0, 0, 0.6);">
             
-            <div class="security-card" style="padding-top: 0px; padding-bottom: 30px; padding-left: 20px; padding-right: 20px; display: flex; flex-direction: column; align-items: center; text-align: center;">
+            <div class="security-card" style="padding-top: 0px; padding-bottom: 30px; padding-left: 20px; padding-right: 20px; display: flex; flex-direction: column; align-items: center; text-align: center; width: 650px; flex-shrink: 0;">
                 
                 <div class="shield-icon" style="margin-top: -100px; margin-bottom: -120px;">
                     <img src="assets/yb.PNG" alt="YB" style="width: 500px; height: 500px; object-fit: contain;">
@@ -77,4 +77,32 @@ export function loadScene4(stage) {
         // Instantly transition to Scene 5
         changeScene(loadScene5);
     };
+
+    // ==========================================
+    // RESPONSIVE SCALING (The Video Game Trick)
+    // ==========================================
+    function scaleToFit() {
+        // 1. Grab the security card container
+        const container = document.querySelector('.security-card'); 
+        if (!container) return;
+
+        // 2. See how wide the user's screen is. Divide by 700 to leave a small border around your 650px card.
+        const screenWidth = window.innerWidth;
+        const scaleFactor = screenWidth / 700; 
+
+        // 3. Only shrink on small screens. Math.min prevents it from zooming past 100%.
+        const finalScale = Math.min(scaleFactor, 1);
+
+        // 4. Apply the zoom!
+        container.style.transform = `scale(${finalScale})`;
+        
+        // 5. Keep it anchored in the center while it scales
+        container.style.transformOrigin = 'center center'; 
+    }
+
+    // Run immediately when the scene loads
+    scaleToFit();
+
+    // Re-calculate if the user resizes their browser window or rotates their phone
+    window.addEventListener('resize', scaleToFit);
 }
