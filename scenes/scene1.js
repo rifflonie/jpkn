@@ -15,21 +15,25 @@ export function loadScene1(stage) {
     const logo = document.getElementById('oldLogo');
     const wrapper = document.getElementById('logoWrap');
 
-    setTimeout(() => {
+    stage.onclick = () => {
         if (logo && wrapper) {
-            // 1. Shake the screen
+            // 1. Disable the click so they can't trigger it multiple times
+            stage.onclick = null; 
+            stage.style.cursor = 'default'; // Reset the cursor back to normal
+            
+            // 2. Shake the screen
             stage.classList.add('impact-shake');
             
-            // 2. Run the custom script that cuts the image into pieces
+            // 3. Run the custom script that cuts the image into pieces
             shatterRealImage(logo, wrapper);
 
-            // 3. Move to next scene after the glass falls (1.5s)
+            // 4. Move to next scene after the glass falls (1.5s)
             setTimeout(() => {
                 stage.classList.remove('impact-shake');
                 changeScene(loadScene3);
             }, 1500);
         }
-    }, 5000);
+    };
 }
 
 /* --- THE TRUE IMAGE SHATTER FUNCTION --- */
