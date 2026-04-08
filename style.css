@@ -131,16 +131,18 @@ html, body {
     animation: fadeIn 0.5s ease-out;
 }
 
-.shield-icon {
-    margin-bottom: 5px;
-    filter: drop-shadow(0 0 10px rgba(0, 85, 255, 0.5));
-}
-
 .security-card h2 {
     color: #000000;
-    font-size: 3rem; 
+    font-size: 2rem; 
     margin-bottom: 5px;
     letter-spacing: 2px;
+}
+
+.security-card p {
+    color: #000000;
+    font-size: 1.5rem; 
+    line-height: 1.2;
+    margin-bottom: 100px; 
 }
 
 .security-card p {
